@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Test quadrilateral intersections
 
@@ -18,16 +19,13 @@ with a nice geometry library
 import copy
 import unittest
 
-
-# TODO implement actual iou functionality
-def iou(poly1, poly2):
-    return 0
+from quad_iou import quad_iou as iou
 
 
 class TestZeroIOU(unittest.TestCase):
     def test_zero_iou(self):
         poly1 = [(0, 0), (3, 0), (3, 3), (0, 3)]
-        poly2 = [(coord + 15 for coord in point) for point in poly1]
+        poly2 = [[coord + 15 for coord in point] for point in poly1]
         self.assertEqual(0, iou(poly1, poly2))
 
 
@@ -52,8 +50,8 @@ class TestInputUnchange(unittest.TestCase):
 class TestEasySquares(unittest.TestCase):
     def test_easy_square(self):
         poly1 = [(0, 0), (3, 0), (3, 3), (0, 3)]
-        poly2 = [(coord / 4.0 for coord in point) for point in poly1]
-        self.assertAlmostEqual(0.25, iou(poly1, poly2))
+        poly2 = [[coord / 4.0 for coord in point] for point in poly1]
+        self.assertAlmostEqual(0.0625, iou(poly1, poly2))
 
 
 class TestEasyPhombus(unittest.TestCase):
