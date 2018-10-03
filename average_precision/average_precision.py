@@ -5,8 +5,7 @@ object detection models
 
 """
 
-import quad_iou
-import test_case
+import polygon_iou
 
 
 def precision(tp, fp):
@@ -26,7 +25,7 @@ def pr_values(targets, estimates, required_iou=.5):
     true_positives = 0
     for estimate in estimates:
         target_ious = list(map(
-            lambda x: quad_iou.quad_iou(estimate[1], x), targets))
+            lambda x: polygon_iou.polygon_iou(estimate[1], x), targets))
 
         # false positive / smaller than required_iou
         if not any(map(lambda x: x >= required_iou, target_ious)):
@@ -35,7 +34,6 @@ def pr_values(targets, estimates, required_iou=.5):
 
         # remove largest overlap from targets to not count it twice
         true_positives += 1
-        max_iou = max(target_ious)
         max_index = target_ious.index(max(target_ious))
         del target_ious[max_index]
 
@@ -50,13 +48,5 @@ def average_precision(precisions, recalls):
 
     ap = 0
     for i in range(1, len(precisions)):
-        ap += precisions[i] * (recalls[i] - recalls[i-1])
+        ap += precisions[i] * (recalls[i] - recalls[i - 1])
     return ap
-    
-
-if __name__ == '__main__':
-    targets = test_case.sample_targets()
-    estimates = test_case.sample_estimates()
-    precisions, recalls = pr_values(targets, estimates)
-    ap = average_precision(precisions, recalls)
-    print(ap)

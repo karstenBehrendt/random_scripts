@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """
-Test quadrilateral intersections
+Test polygon intersections
 
-No time pressure this time, so I'll define a few shapes and get
-the intersection script running based on those
+Covers a very limited sample set to check if the iou functions are working
+as intended. The tests are too limited to assert correctness. The tests
+also only cover quadrilaterals.
 
-The goal is to have a simple API to solve this specific use-case
-with a nice geometry library
 """
 # NOTE Ignoring incorrect inputs for first (and likely last) version of tests
-# NOTE This is a project for fun. This is going to be incomplete
+# NOTE The tests are in now way covering necessary test cases.
 
 # TODO Negative Values
 # TODO Self intersecting polygon
@@ -19,7 +18,7 @@ with a nice geometry library
 import copy
 import unittest
 
-from quad_iou import quad_iou as iou
+from polygon_iou import polygon_iou as iou
 
 
 class TestZeroIOU(unittest.TestCase):
